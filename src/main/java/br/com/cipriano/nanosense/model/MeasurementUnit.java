@@ -10,56 +10,66 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="user")
-//@JsonPropertyOrder({"id", "email", "username"})
-public class User implements Serializable{
+@Table
+public class MeasurementUnit implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
-//	@JsonProperty("user_name")
-	@Column(name="username", nullable=false, length = 20)
-	private String username;
+	@Column(nullable=false, length = 10)
+	private String symbol;
 	
-//	@JsonIgnore
-	@Column(nullable=false, length = 40)
-	private String email;
+	@Column(nullable=false, length = 200)
+	private String description;
 	
-	public User() {
+	public MeasurementUnit() {
 		
 	}
+	
 	
 	public long getId() {
 		return id;
 	}
+
+
 	public void setId(long id) {
 		this.id = id;
 	}
-	public String getUsername() {
-		return username;
+
+
+	public String getSymbol() {
+		return symbol;
 	}
-	public void setUsername(String username) {
-		this.username = username;
+
+
+	public void setSymbol(String symbol) {
+		this.symbol = symbol;
 	}
-	public String getEmail() {
-		return email;
+
+
+	public String getDescription() {
+		return description;
 	}
-	public void setEmail(String email) {
-		this.email = email;
+
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
-	
+
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + (int) (id ^ (id >>> 32));
-		result = prime * result + ((username == null) ? 0 : username.hashCode());
+		result = prime * result + ((symbol == null) ? 0 : symbol.hashCode());
 		return result;
 	}
-	
+
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -68,20 +78,23 @@ public class User implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		User other = (User) obj;
-		if (email == null) {
-			if (other.email != null)
+		MeasurementUnit other = (MeasurementUnit) obj;
+		if (description == null) {
+			if (other.description != null)
 				return false;
-		} else if (!email.equals(other.email))
+		} else if (!description.equals(other.description))
 			return false;
 		if (id != other.id)
 			return false;
-		if (username == null) {
-			if (other.username != null)
+		if (symbol == null) {
+			if (other.symbol != null)
 				return false;
-		} else if (!username.equals(other.username))
+		} else if (!symbol.equals(other.symbol))
 			return false;
 		return true;
 	}
+
+
+
 
 }
