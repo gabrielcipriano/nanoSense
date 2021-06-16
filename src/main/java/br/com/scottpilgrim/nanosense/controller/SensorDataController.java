@@ -1,10 +1,11 @@
 package br.com.scottpilgrim.nanosense.controller;
 
-
-//import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.convert.ConversionService;
+import org.springframework.core.convert.TypeDescriptor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,41 +16,50 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.scottpilgrim.nanosense.model.User;
-import br.com.scottpilgrim.nanosense.services.UserServices;
+import br.com.scottpilgrim.nanosense.data.model.SensorData;
+import br.com.scottpilgrim.nanosense.data.vo.SensorDataVO;
+import br.com.scottpilgrim.nanosense.services.SensorDataServices;
 
 
 @RestController
-@RequestMapping("/sersor-data")
+@RequestMapping("/sensor-data")
 public class SensorDataController {
-//	@GetMapping
-//	public LocalDateTime findAll(){
-//		return LocalDateTime.ofEpochSecond(1506455591, 0, null);
-//	}
-//	
-	
 
 	@Autowired
-	private UserServices services;
+	private SensorDataServices services;
+	
+	@Autowired
+	@Qualifier("mvcConversionService")
+	ConversionService conversionService;
 	
 	@GetMapping
-	public List<User> findAll(){
-		return services.findAll();
+	public List<SensorDataVO> findAll(){
+		List<SensorData> source = services.findAll();
+		TypeDescriptor sourceType = TypeDescriptor.collection(List.class, TypeDescriptor.valueOf(SensorData.class));
+		TypeDescriptor targetType = TypeDescriptor.collection(List.class, TypeDescriptor.valueOf(SensorDataVO.class));
+		
+		@SuppressWarnings("unchecked") // It's a safe downcast
+		List<SensorDataVO> vos = (List<SensorDataVO>) conversionService.convert(source, sourceType, targetType);
+		return  vos;
 	}
 	
 	@PostMapping
-	public User create(@RequestBody User user){
-		return services.create(user);
+	public SensorDataVO create(@RequestBody SensorDataVO sensorData){
+		SensorData entity = conversionService.convert(sensorData, SensorData.class);
+		return conversionService.convert(services.create(entity), SensorDataVO.class);
 	}
 	
 	@PutMapping
-	public User update(@RequestBody User user){
-		return services.update(user);
+	public SensorDataVO update(@RequestBody SensorDataVO sensorData){
+		SensorData entity = conversionService.convert(sensorData, SensorData.class);
+		return conversionService.convert(services.update(entity), SensorDataVO.class);
 	}
 	
+	
+	
 	@GetMapping("/{id}")
-	public User findById(@PathVariable("id") Long id){
-		return services.findById(id);
+	public SensorDataVO findById(@PathVariable("id") Long id){
+		return conversionService.convert(services.findById(id), SensorDataVO.class);
 	}
 
 	@DeleteMapping("/{id}")

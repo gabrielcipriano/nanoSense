@@ -5,41 +5,41 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.scottpilgrim.nanosense.data.model.User;
+import br.com.scottpilgrim.nanosense.data.model.SensorData;
 import br.com.scottpilgrim.nanosense.exception.ResourceNotFoundException;
-import br.com.scottpilgrim.nanosense.repository.UserRepository;
+import br.com.scottpilgrim.nanosense.repository.SensorDataRepository;
 
 @Service
-public class UserServices {
+public class SensorDataServices {
 	
 	@Autowired
-	UserRepository repository;
+	SensorDataRepository repository;
 	
-	public User create(User user) {
-		return repository.save(user);
+	public SensorData create(SensorData sensorData) {
+		return repository.save(sensorData);
 	}
 	
-	public List<User> findAll(){
+	public List<SensorData> findAll(){
 		return repository.findAll();
 	}
 	
-	public User findById(Long id ) {
+	public SensorData findById(Long id ) {
 
 		return repository.findById(id).orElseThrow(()-> new ResourceNotFoundException("No records found for this ID"));
 	}
 	
-	public User update(User user) {
-		User entity = repository.findById(user.getId())
+	public SensorData update(SensorData sensorData) {
+		SensorData entity = repository.findById(sensorData.getId())
 				.orElseThrow(()-> new ResourceNotFoundException("No records found for this ID"));
 
-		entity.setUsername(user.getUsername());
-		entity.setEmail(user.getEmail());
+		entity.setTimestamp(sensorData.getTimestamp());
+		entity.setValue(sensorData.getValue());
 		
 		return repository.save(entity);
 	}
 	
 	public void delete(Long id) {
-		User entity = repository.findById(id)
+		SensorData entity = repository.findById(id)
 				.orElseThrow(()-> new ResourceNotFoundException("No records found for this ID"));
 		repository.delete(entity);
 	}
