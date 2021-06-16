@@ -1,4 +1,4 @@
-package br.com.cipriano.nanosense.exception;
+package br.com.scottpilgrim.nanosense.exception;
 
 import java.io.Serializable;
 import java.util.Date;

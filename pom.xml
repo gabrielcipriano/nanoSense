@@ -8,7 +8,7 @@
 		<version>2.5.1</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>br.com.cipriano</groupId>
+	<groupId>br.com.scottpilgrim</groupId>
 	<artifactId>nanosense</artifactId>
 	<version>0.0.1</version>
 	<name>nanosense</name>

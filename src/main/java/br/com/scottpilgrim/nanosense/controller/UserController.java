@@ -1,4 +1,4 @@
-package br.com.cipriano.nanosense.controller;
+package br.com.scottpilgrim.nanosense.controller;
 
 
 import java.util.List;
@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.cipriano.nanosense.model.User;
-import br.com.cipriano.nanosense.services.UserServices;
+import br.com.scottpilgrim.nanosense.model.User;
+import br.com.scottpilgrim.nanosense.services.UserServices;
 
 
 @RestController

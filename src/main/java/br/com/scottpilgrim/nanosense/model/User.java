@@ -1,4 +1,4 @@
-package br.com.cipriano.nanosense.model;
+package br.com.scottpilgrim.nanosense.model;
 
 import java.io.Serializable;
 

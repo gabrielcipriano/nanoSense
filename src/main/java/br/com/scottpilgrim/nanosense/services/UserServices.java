@@ -1,13 +1,13 @@
-package br.com.cipriano.nanosense.services;
+package br.com.scottpilgrim.nanosense.services;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.cipriano.nanosense.exception.ResourceNotFoundException;
-import br.com.cipriano.nanosense.model.User;
-import br.com.cipriano.nanosense.repository.UserRepository;
+import br.com.scottpilgrim.nanosense.exception.ResourceNotFoundException;
+import br.com.scottpilgrim.nanosense.model.User;
+import br.com.scottpilgrim.nanosense.repository.UserRepository;
 
 @Service
 public class UserServices {

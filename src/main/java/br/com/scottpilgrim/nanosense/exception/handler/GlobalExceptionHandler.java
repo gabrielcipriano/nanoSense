@@ -1,4 +1,4 @@
-package br.com.cipriano.nanosense.exception.handler;
+package br.com.scottpilgrim.nanosense.exception.handler;
 
 
 import java.util.Date;
@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import br.com.cipriano.nanosense.exception.ExceptionResponse;
-import br.com.cipriano.nanosense.exception.ResourceNotFoundException;
+import br.com.scottpilgrim.nanosense.exception.ExceptionResponse;
+import br.com.scottpilgrim.nanosense.exception.ResourceNotFoundException;
 
 @ControllerAdvice
 @RestController

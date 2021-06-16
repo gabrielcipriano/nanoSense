@@ -1,13 +1,13 @@
-package br.com.cipriano.nanosense.services;
+package br.com.scottpilgrim.nanosense.services;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.cipriano.nanosense.exception.ResourceNotFoundException;
-import br.com.cipriano.nanosense.model.MeasurementUnit;
-import br.com.cipriano.nanosense.repository.MeasurementUnitRepository;
+import br.com.scottpilgrim.nanosense.exception.ResourceNotFoundException;
+import br.com.scottpilgrim.nanosense.model.MeasurementUnit;
+import br.com.scottpilgrim.nanosense.repository.MeasurementUnitRepository;
 
 @Service
 public class MeasurementUnitServices {

@@ -1,4 +1,4 @@
-package br.com.cipriano.nanosense.exception;
+package br.com.scottpilgrim.nanosense.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
