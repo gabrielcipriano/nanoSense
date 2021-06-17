@@ -7,9 +7,12 @@ import java.time.ZoneOffset;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 
@@ -31,6 +34,14 @@ public class SensorData implements Serializable{
 	@Column(nullable=false)
 	private double value;
 	
+	@ManyToOne(optional = false)
+	@JoinColumn(name="measurement_unit_id", nullable = false)
+	MeasurementUnit measurementUnit;
+	
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "data_stream_id", nullable = false)
+	DataStream dataStream;
+	
 	public SensorData() {
 		
 	}
@@ -42,15 +53,6 @@ public class SensorData implements Serializable{
 	public void setId(long id) {
 		this.id = id;
 	}
-	
-//	public LocalDateTime getTimestamp() {
-//		return timestamp;
-//	}
-//
-//	public void setTimestamp(LocalDateTime timestamp) {
-//		this.timestamp = timestamp;
-//	}
-	
 	
 	public long getTimestamp() {
 		return timestamp.toEpochSecond(ZoneOffset.UTC);
@@ -67,21 +69,30 @@ public class SensorData implements Serializable{
 		this.value = value;
 	}
 	
-	
-	
-	
-	
 
-	@Override
-	public String toString() {
-		return "SensorData [id=" + id + ", timestamp=" + timestamp + ", value=" + value + "]";
+	public MeasurementUnit getMeasurementUnit() {
+		return measurementUnit;
+	}
+
+	public void setMeasurementUnit(MeasurementUnit measurementUnit) {
+		this.measurementUnit = measurementUnit;
+	}
+	
+	public DataStream getDataStream() {
+		return dataStream;
+	}
+
+	public void setDataStream(DataStream dataStream) {
+		this.dataStream = dataStream;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((dataStream == null) ? 0 : dataStream.hashCode());
 		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + ((measurementUnit == null) ? 0 : measurementUnit.hashCode());
 		result = prime * result + ((timestamp == null) ? 0 : timestamp.hashCode());
 		long temp;
 		temp = Double.doubleToLongBits(value);
@@ -98,7 +109,17 @@ public class SensorData implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		SensorData other = (SensorData) obj;
+		if (dataStream == null) {
+			if (other.dataStream != null)
+				return false;
+		} else if (!dataStream.equals(other.dataStream))
+			return false;
 		if (id != other.id)
+			return false;
+		if (measurementUnit == null) {
+			if (other.measurementUnit != null)
+				return false;
+		} else if (!measurementUnit.equals(other.measurementUnit))
 			return false;
 		if (timestamp == null) {
 			if (other.timestamp != null)
@@ -109,6 +130,10 @@ public class SensorData implements Serializable{
 			return false;
 		return true;
 	}
+
+	
+	//Auto-generated
+
 	
 
 }

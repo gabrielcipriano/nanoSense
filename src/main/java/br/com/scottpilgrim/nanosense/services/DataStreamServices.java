@@ -39,7 +39,9 @@ public class DataStreamServices {
 
 		entity.setEnabled(dataStream.isEnabled());
 		entity.setLabel(dataStream.getLabel());
-		entity.setMeasurementCount(dataStream.getMeasurementCount());
+		entity.setMeasurementUnit(dataStream.getMeasurementUnit());
+//		entity.setMeasurementCount(dataStream.getMeasurementCount());
+//		entity.setSensorDatas(dataStream.getSensorDatas());
 		
 		return repository.save(entity);
 	}

@@ -1,15 +1,23 @@
 package br.com.scottpilgrim.nanosense.model;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicLong;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @Entity
@@ -28,14 +36,25 @@ public class DataStream implements Serializable{
 	private String label;
 	
 	@Column(nullable=false)
-	private boolean enabled = true;
+	private boolean enabled;
 	
 	@Column(nullable = false)
 	private AtomicLong measurementCount = new AtomicLong();
 	
+	@JsonProperty("unitId")
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "measurement_unit_id", nullable = false)
+	MeasurementUnit measurementUnit;
+	
+	@OneToMany(mappedBy = "dataStream", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	List<SensorData> sensorDatas;
+	
+	
 	public DataStream() {
 		this.key = UUID.randomUUID().toString().replace("-", "");
 	}
+
+	
 
 	public long getId() {
 		return id;
@@ -69,6 +88,22 @@ public class DataStream implements Serializable{
 		this.enabled = enabled;
 	}
 
+	public MeasurementUnit getMeasurementUnit() {
+		return measurementUnit;
+	}
+
+	public void setMeasurementUnit(MeasurementUnit measurementUnit) {
+		this.measurementUnit = measurementUnit;
+	}
+
+	public List<SensorData> getSensorDatas() {
+		return sensorDatas;
+	}
+
+	public void setSensorDatas(List<SensorData> sensorDatas) {
+		this.sensorDatas = sensorDatas;
+	}
+
 	public long getMeasurementCount() {
 		return measurementCount.longValue();
 	}
@@ -81,6 +116,8 @@ public class DataStream implements Serializable{
 		return measurementCount.incrementAndGet();
 	}
 
+
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -89,8 +126,13 @@ public class DataStream implements Serializable{
 		result = prime * result + (int) (id ^ (id >>> 32));
 		result = prime * result + ((key == null) ? 0 : key.hashCode());
 		result = prime * result + ((label == null) ? 0 : label.hashCode());
+		result = prime * result + ((measurementCount == null) ? 0 : measurementCount.hashCode());
+		result = prime * result + ((measurementUnit == null) ? 0 : measurementUnit.hashCode());
+		result = prime * result + ((sensorDatas == null) ? 0 : sensorDatas.hashCode());
 		return result;
 	}
+
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -115,7 +157,25 @@ public class DataStream implements Serializable{
 				return false;
 		} else if (!label.equals(other.label))
 			return false;
+		if (measurementCount == null) {
+			if (other.measurementCount != null)
+				return false;
+		} else if (getMeasurementCount() != other.getMeasurementCount())
+			return false;
+		if (measurementUnit == null) {
+			if (other.measurementUnit != null)
+				return false;
+		} else if (!measurementUnit.equals(other.measurementUnit))
+			return false;
+		if (sensorDatas == null) {
+			if (other.sensorDatas != null)
+				return false;
+		} else if (!sensorDatas.equals(other.sensorDatas))
+			return false;
 		return true;
 	}
 
+	
+	
+	
 }

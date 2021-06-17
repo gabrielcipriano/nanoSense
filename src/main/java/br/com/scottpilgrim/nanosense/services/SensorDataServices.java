@@ -34,6 +34,8 @@ public class SensorDataServices {
 
 		entity.setTimestamp(sensorData.getTimestamp());
 		entity.setValue(sensorData.getValue());
+//		entity.setMeasurementUnit(sensorData.getMeasurementUnit());
+//		entity.setDataStream(sensorData.getDataStream());
 		
 		return repository.save(entity);
 	}
