@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.scottpilgrim.nanosense.model.SensorDevice;
 import br.com.scottpilgrim.nanosense.model.User;
+import br.com.scottpilgrim.nanosense.services.SensorDeviceServices;
 import br.com.scottpilgrim.nanosense.services.UserServices;
 
 
@@ -23,31 +25,51 @@ import br.com.scottpilgrim.nanosense.services.UserServices;
 public class UserController {
 
 	@Autowired
-	private UserServices services;
+	private UserServices userServices;
+	
+	@Autowired
+	private SensorDeviceServices deviceServices;
 	
 	@GetMapping
 	public List<User> findAll(){
-		return services.findAll();
+		return userServices.findAll();
 	}
 	
 	@PostMapping
 	public User create(@RequestBody User user){
-		return services.create(user);
+		return userServices.create(user);
 	}
 	
 	@PutMapping
 	public User update(@RequestBody User user){
-		return services.update(user);
+		return userServices.update(user);
 	}
 	
 	@GetMapping("/{id}")
 	public User findById(@PathVariable("id") Long id){
-		return services.findById(id);
+		return userServices.findById(id);
 	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable("id") Long id){
-		services.delete(id);
+		userServices.delete(id);
 		return ResponseEntity.ok().build();
 	}
+	
+	@GetMapping("/{id}/device")
+	public List<SensorDevice> getUserDevices(@PathVariable long id){
+		return userServices.findById(id).getDevices();
+	}
+
+	@PostMapping("/{id}/device")
+	public SensorDevice createUserDevice(@RequestBody SensorDevice device, @PathVariable("id") long userId){
+		User owner = findById(userId);
+		
+		device.setOwner(owner);
+		SensorDevice entityDevice = deviceServices.create(device);
+		owner.getDevices().add(entityDevice);
+		userServices.update(owner);
+		return entityDevice;
+	}
+
 }

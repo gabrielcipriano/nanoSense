@@ -8,7 +8,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
@@ -29,6 +33,10 @@ public class SensorDevice implements Serializable{
 	@Column(nullable=false, length = 255)
 	private String description;
 	
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name="owner_id", nullable = false)
+	private User owner;
 
 	
 	public SensorDevice() {
@@ -83,50 +91,18 @@ public class SensorDevice implements Serializable{
 		this.description = description;
 	}
 
-
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((description == null) ? 0 : description.hashCode());
-		result = prime * result + (int) (id ^ (id >>> 32));
-		result = prime * result + ((key == null) ? 0 : key.hashCode());
-		result = prime * result + ((label == null) ? 0 : label.hashCode());
-		return result;
-	}
-
-
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		SensorDevice other = (SensorDevice) obj;
-		if (description == null) {
-			if (other.description != null)
-				return false;
-		} else if (!description.equals(other.description))
-			return false;
-		if (id != other.id)
-			return false;
-		if (key == null) {
-			if (other.key != null)
-				return false;
-		} else if (!key.equals(other.key))
-			return false;
-		if (label == null) {
-			if (other.label != null)
-				return false;
-		} else if (!label.equals(other.label))
-			return false;
-		return true;
-	}
 	
+
+	public User getOwner() {
+		return owner;
+	}
+
+
+
+	public void setOwner(User owner) {
+		this.owner = owner;
+	}
+
 	
 
 }

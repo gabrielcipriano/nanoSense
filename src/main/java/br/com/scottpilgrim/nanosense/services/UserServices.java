@@ -34,6 +34,7 @@ public class UserServices {
 
 		entity.setUsername(user.getUsername());
 		entity.setEmail(user.getEmail());
+		entity.setDevices(user.getDevices());
 		
 		return repository.save(entity);
 	}
