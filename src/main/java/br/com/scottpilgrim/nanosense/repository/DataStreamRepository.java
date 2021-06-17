@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import br.com.scottpilgrim.nanosense.data.model.DataStream;
+import br.com.scottpilgrim.nanosense.model.DataStream;
 
 public interface DataStreamRepository extends JpaRepository<DataStream, Long> {
 	Optional<DataStream> findByKey(String key);

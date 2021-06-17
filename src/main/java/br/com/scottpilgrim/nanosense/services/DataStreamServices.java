@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.scottpilgrim.nanosense.data.model.DataStream;
 import br.com.scottpilgrim.nanosense.exception.ResourceNotFoundException;
+import br.com.scottpilgrim.nanosense.model.DataStream;
 import br.com.scottpilgrim.nanosense.repository.DataStreamRepository;
 
 @Service

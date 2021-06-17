@@ -1,8 +1,9 @@
-package br.com.scottpilgrim.nanosense.data.model;
+package br.com.scottpilgrim.nanosense.model;
 
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -42,18 +43,21 @@ public class SensorData implements Serializable{
 		this.id = id;
 	}
 	
-	public LocalDateTime getTimestamp() {
-		return timestamp;
-	}
-
-	public void setTimestamp(LocalDateTime timestamp) {
-		this.timestamp = timestamp;
-	}
-	
-//	public void setTimestamp(Long tstamp) {
-//		
-//		this.timestamp = LocalDateTime.ofEpochSecond(tstamp, 0, null);;
+//	public LocalDateTime getTimestamp() {
+//		return timestamp;
 //	}
+//
+//	public void setTimestamp(LocalDateTime timestamp) {
+//		this.timestamp = timestamp;
+//	}
+	
+	
+	public long getTimestamp() {
+		return timestamp.toEpochSecond(ZoneOffset.UTC);
+	}
+	public void setTimestamp(long timestamp) {
+		this.timestamp = LocalDateTime.ofEpochSecond(timestamp, 0, ZoneOffset.UTC);
+	}
 
 	public double getValue() {
 		return value;

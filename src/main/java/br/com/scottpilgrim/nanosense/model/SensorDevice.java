@@ -1,4 +1,4 @@
-package br.com.scottpilgrim.nanosense.data.model;
+package br.com.scottpilgrim.nanosense.model;
 
 import java.io.Serializable;
 import java.util.UUID;

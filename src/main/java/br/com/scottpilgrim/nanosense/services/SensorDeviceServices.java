@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.scottpilgrim.nanosense.data.model.SensorDevice;
 import br.com.scottpilgrim.nanosense.exception.ResourceNotFoundException;
+import br.com.scottpilgrim.nanosense.model.SensorDevice;
 import br.com.scottpilgrim.nanosense.repository.SensorDeviceRepository;
 
 @Service
