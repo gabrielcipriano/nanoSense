@@ -24,20 +24,7 @@ public class SensorDataServices {
 	}
 	
 	public SensorData findById(Long id ) {
-
 		return repository.findById(id).orElseThrow(()-> new ResourceNotFoundException("No records found for this ID"));
-	}
-	
-	public SensorData update(SensorData sensorData) {
-		SensorData entity = repository.findById(sensorData.getId())
-				.orElseThrow(()-> new ResourceNotFoundException("No records found for this ID"));
-
-		entity.setTimestamp(sensorData.getTimestamp());
-		entity.setValue(sensorData.getValue());
-//		entity.setMeasurementUnit(sensorData.getMeasurementUnit());
-//		entity.setDataStream(sensorData.getDataStream());
-		
-		return repository.save(entity);
 	}
 	
 	public void delete(Long id) {

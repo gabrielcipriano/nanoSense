@@ -35,11 +35,6 @@ public class SensorDataController {
 		return services.create(sensorData);
 	}
 	
-	@PutMapping
-	public SensorData update(@RequestBody SensorData sensorData){
-		return services.update(sensorData);
-	}
-	
 	@GetMapping("/{id}")
 	public SensorData findById(@PathVariable("id") Long id){
 		return services.findById(id);

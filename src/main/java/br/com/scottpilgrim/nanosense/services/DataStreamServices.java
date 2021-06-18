@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.scottpilgrim.nanosense.converter.DozerConverter;
+import br.com.scottpilgrim.nanosense.dto.DataStreamExplicitDTO;
 import br.com.scottpilgrim.nanosense.exception.ResourceNotFoundException;
 import br.com.scottpilgrim.nanosense.model.DataStream;
 import br.com.scottpilgrim.nanosense.repository.DataStreamRepository;
@@ -28,9 +30,13 @@ public class DataStreamServices {
 		return repository.findById(id).orElseThrow(()-> new ResourceNotFoundException("No records found for this ID"));
 	}
 	
-	public DataStream findByKey(String key) {
-		return repository.findByKey(key)
-				.orElseThrow(()-> new ResourceNotFoundException("No records found for this Key"));
+	public DataStreamExplicitDTO findByKey(String key) {
+//		return repository.findByKey(key)
+//				.orElseThrow(()-> new ResourceNotFoundException("No records found for this Key"));
+		
+		DataStream entity = repository.findByKey(key).orElseThrow(()-> new ResourceNotFoundException("No records found for this ID"));
+		var vo = DozerConverter.parseObject(entity, DataStreamExplicitDTO.class);
+		return vo;
 	}
 	
 	public DataStream update(DataStream dataStream) {
@@ -39,9 +45,6 @@ public class DataStreamServices {
 
 		entity.setEnabled(dataStream.isEnabled());
 		entity.setLabel(dataStream.getLabel());
-		entity.setMeasurementUnit(dataStream.getMeasurementUnit());
-//		entity.setMeasurementCount(dataStream.getMeasurementCount());
-//		entity.setSensorDatas(dataStream.getSensorDatas());
 		
 		return repository.save(entity);
 	}
