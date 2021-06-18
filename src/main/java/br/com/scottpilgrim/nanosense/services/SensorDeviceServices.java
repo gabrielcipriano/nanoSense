@@ -5,7 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.scottpilgrim.nanosense.converter.DozerConverter;
+import br.com.scottpilgrim.nanosense.dto.SensorDeviceDTO;
 import br.com.scottpilgrim.nanosense.exception.ResourceNotFoundException;
+import br.com.scottpilgrim.nanosense.model.DataStream;
 import br.com.scottpilgrim.nanosense.model.SensorDevice;
 import br.com.scottpilgrim.nanosense.repository.SensorDeviceRepository;
 
@@ -14,6 +17,9 @@ public class SensorDeviceServices {
 	
 	@Autowired
 	SensorDeviceRepository repository;
+	
+	@Autowired
+	SensorDataServices sensorDataServices;
 	
 	public SensorDevice create(SensorDevice sensorDevice) {
 		return repository.save(sensorDevice);
@@ -28,9 +34,19 @@ public class SensorDeviceServices {
 		return repository.findById(id).orElseThrow(()-> new ResourceNotFoundException("No records found for this ID"));
 	}
 	
+	public SensorDeviceDTO findByKeyDTO(String key) {
+		SensorDevice sensorDevice = repository.findByKey(key).orElseThrow(()-> new ResourceNotFoundException("No records found for this Key"));
+		var deviceDTO = DozerConverter.parseObject(sensorDevice, SensorDeviceDTO.class);
+		deviceDTO.getStreams().forEach(
+				stream -> stream.setMeasurements(sensorDataServices.findFirst5OrderById(
+						DozerConverter.parseObject(stream, DataStream.class
+					)))
+			);
+		return deviceDTO;
+	}
+	
 	public SensorDevice findByKey(String key) {
-		return repository.findByKey(key)
-				.orElseThrow(()-> new ResourceNotFoundException("No records found for this Key"));
+		return repository.findByKey(key).orElseThrow(()-> new ResourceNotFoundException("No records found for this Key"));
 	}
 	
 	public SensorDevice update(SensorDevice sensorDevice) {
@@ -48,4 +64,6 @@ public class SensorDeviceServices {
 				.orElseThrow(()-> new ResourceNotFoundException("No records found for this Key"));
 		repository.delete(entity);
 	}
+	
+	
 }

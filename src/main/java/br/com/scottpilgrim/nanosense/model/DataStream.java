@@ -52,7 +52,7 @@ public class DataStream implements Serializable{
 	private long deviceId;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "dataStream", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "ownerStream", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	List<SensorData> measurements;
 	
 	@Column(nullable = false)
@@ -131,6 +131,10 @@ public class DataStream implements Serializable{
 
 	public void setMeasurementCount(long measurementCount) {
 		this.measurementCount = measurementCount;
+	}
+	
+	public void incrementMeasurementCount() {
+		this.measurementCount += 1;
 	}
 
 

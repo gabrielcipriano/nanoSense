@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import br.com.scottpilgrim.nanosense.exception.BadRequestException;
 import br.com.scottpilgrim.nanosense.exception.ExceptionResponse;
 import br.com.scottpilgrim.nanosense.exception.ResourceNotFoundException;
 
@@ -32,6 +33,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
 																	ex.getMessage(), 
 																	request.getDescription(false));
 		return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
+	}
+	
+	@ExceptionHandler(BadRequestException.class)
+	public final ResponseEntity<ExceptionResponse> handleBadRequestException(RuntimeException ex, WebRequest request){
+		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), 
+																	ex.getMessage(), 
+																	request.getDescription(false));
+		return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
 	}
 
 }

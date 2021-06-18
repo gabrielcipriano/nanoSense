@@ -1,53 +1,28 @@
-package br.com.scottpilgrim.nanosense.model;
-
+package br.com.scottpilgrim.nanosense.dto;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Entity
-@Table
-public class SensorData implements Serializable {
+import br.com.scottpilgrim.nanosense.model.DataStream;
+import br.com.scottpilgrim.nanosense.model.MeasurementUnit;
+
+
+public class SensorDataExplicitDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	@JsonIgnore
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	
-	
-	@Column(nullable=false)
 	private LocalDateTime timestamp;
-	
-	@Column(nullable=false)
 	private double value;
-	
 	@JsonIgnore
-	@ManyToOne(optional = false)
-	@JoinColumn(name="measurement_unit_id", nullable = false)
 	MeasurementUnit measurementUnit;
-	
-	@JsonIgnore
 	long unitId;
-	
 	@JsonIgnore
-	@ManyToOne(optional = false, fetch = FetchType.LAZY)
-	@JoinColumn(name = "data_stream_id", nullable = false)
 	DataStream ownerStream;
 	
-	public SensorData() {
+	public SensorDataExplicitDTO() {
 		
 	}
 
@@ -73,7 +48,6 @@ public class SensorData implements Serializable {
 	public void setValue(double value) {
 		this.value = value;
 	}
-	
 
 	public MeasurementUnit getMeasurementUnit() {
 		return measurementUnit;
@@ -81,15 +55,6 @@ public class SensorData implements Serializable {
 
 	public void setMeasurementUnit(MeasurementUnit measurementUnit) {
 		this.measurementUnit = measurementUnit;
-		this.unitId = measurementUnit.getId();
-	}
-	
-	public DataStream getOwnerStream() {
-		return ownerStream;
-	}
-
-	public void setOwnerStream(DataStream dataStream) {
-		this.ownerStream = dataStream;
 	}
 
 	public long getUnitId() {
@@ -99,12 +64,17 @@ public class SensorData implements Serializable {
 	public void setUnitId(long unitId) {
 		this.unitId = unitId;
 	}
-	
 
-	@Override
-	public String toString() {
-		return "SensorData [id=" + id + ", timestamp=" + timestamp + ", value=" + value + ", measurementUnit="
-				+ measurementUnit + ", unitId=" + unitId + ", ownerStream=" + ownerStream + "]";
+	public DataStream getOwnerStream() {
+		return ownerStream;
+	}
+
+	public void setOwnerStream(DataStream ownerStream) {
+		this.ownerStream = ownerStream;
+	}
+
+	public void setTimestamp(LocalDateTime timestamp) {
+		this.timestamp = timestamp;
 	}
 
 	@Override
@@ -130,7 +100,7 @@ public class SensorData implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		SensorData other = (SensorData) obj;
+		SensorDataExplicitDTO other = (SensorDataExplicitDTO) obj;
 		if (id != other.id)
 			return false;
 		if (measurementUnit == null) {
@@ -154,6 +124,6 @@ public class SensorData implements Serializable {
 			return false;
 		return true;
 	}
-
-
+	
+	
 }

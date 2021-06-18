@@ -25,18 +25,22 @@ public class DataStreamServices {
 		return repository.findAll();
 	}
 	
+	
+	
 	public DataStream findById(Long id ) {
 
 		return repository.findById(id).orElseThrow(()-> new ResourceNotFoundException("No records found for this ID"));
 	}
 	
-	public DataStreamExplicitDTO findByKey(String key) {
-//		return repository.findByKey(key)
-//				.orElseThrow(()-> new ResourceNotFoundException("No records found for this Key"));
-		
+	public DataStreamExplicitDTO findDTOByKey(String key) {
 		DataStream entity = repository.findByKey(key).orElseThrow(()-> new ResourceNotFoundException("No records found for this ID"));
 		var vo = DozerConverter.parseObject(entity, DataStreamExplicitDTO.class);
 		return vo;
+	}
+	
+	public DataStream findByKey(String key) {
+		return repository.findByKey(key)
+				.orElseThrow(()-> new ResourceNotFoundException("No records found for this Key"));
 	}
 	
 	public DataStream update(DataStream dataStream) {
@@ -49,9 +53,15 @@ public class DataStreamServices {
 		return repository.save(entity);
 	}
 	
+	public DataStream save(DataStream dataStream) {
+		return repository.save(dataStream);
+	}
+	
 	public void delete(String key) {
 		DataStream entity = repository.findByKey(key)
 				.orElseThrow(()-> new ResourceNotFoundException("No records found for this Key"));
 		repository.delete(entity);
 	}
+	
+
 }
