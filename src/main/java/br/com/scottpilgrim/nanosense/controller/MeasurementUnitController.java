@@ -19,7 +19,7 @@ import br.com.scottpilgrim.nanosense.services.MeasurementUnitServices;
 
 
 @RestController
-@RequestMapping("/measurement-unit")
+@RequestMapping("/measurement-units")
 public class MeasurementUnitController {
 
 	@Autowired

@@ -22,7 +22,7 @@ import br.com.scottpilgrim.nanosense.services.SensorDeviceServices;
 
 
 @RestController
-@RequestMapping("/device")
+@RequestMapping("/devices")
 public class SensorDeviceController {
 
 	@Autowired
@@ -50,7 +50,7 @@ public class SensorDeviceController {
 		return ResponseEntity.ok().build();
 	}
 	
-	@PostMapping("/{key}/stream")
+	@PostMapping("/{key}/streams")
 	public DataStream createStream(@RequestBody DataStream stream, @PathVariable("key") String deviceKey) {
 		SensorDevice ownerDevice = services.findByKey(deviceKey);
 		

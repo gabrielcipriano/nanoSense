@@ -23,7 +23,7 @@ import br.com.scottpilgrim.nanosense.services.SensorDataServices;
 
 
 @RestController
-@RequestMapping("/stream")
+@RequestMapping("/streams")
 public class DataStreamController {
 
 	@Autowired
@@ -47,7 +47,7 @@ public class DataStreamController {
 		return ResponseEntity.ok().build();
 	}
 	
-	@PostMapping("/{key}/measurement")
+	@PostMapping("/{key}/measurements")
 	public SensorDataExplicitDTO createSensorData(@RequestBody SensorData measurement, @PathVariable("key") String key) {
 		DataStream ownerStream = services.findByKey(key);
 	
@@ -63,17 +63,10 @@ public class DataStreamController {
 		return entityDTO;
 	}
 	
-	//	TODO: Query personalizada para pegar medições de uma determinada key direto do banco
-	@GetMapping("/{key}/measurement")
+	@GetMapping("/{key}/measurements")
 	public List<SensorData> getAllSensorData(@PathVariable("key") String key) {
 		DataStream ownerStream = services.findByKey(key);
 		return ownerStream.getMeasurements();
-	}
-	
-	@GetMapping("/{key}/measurement2")
-	public List<SensorData> getAllSensorData2(@PathVariable("key") String key) {
-		DataStream ownerStream = services.findByKey(key);
-		return sensorDataServices.findFirst5OrderById(ownerStream);
 	}
 	
 }

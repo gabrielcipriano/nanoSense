@@ -21,7 +21,7 @@ import br.com.scottpilgrim.nanosense.services.UserServices;
 
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserController {
 
 	@Autowired
@@ -56,12 +56,12 @@ public class UserController {
 		return ResponseEntity.ok().build();
 	}
 	
-	@GetMapping("/{id}/device")
+	@GetMapping("/{id}/devices")
 	public List<SensorDevice> getUserDevices(@PathVariable long id){
 		return userServices.findById(id).getDevices();
 	}
 
-	@PostMapping("/{id}/device")
+	@PostMapping("/{id}/devices")
 	public SensorDevice createUserDevice(@RequestBody SensorDevice device, @PathVariable("id") long userId){
 		User owner = findById(userId);
 		
