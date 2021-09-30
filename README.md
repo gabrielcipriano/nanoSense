@@ -16,6 +16,4 @@ O banco de dados configurado é o MySql (versão 8 ou maior). As configurações
 `spring.datasource.username=root`
 `spring.datasource.password=075147`
 
-O projeto pode ser compilado utilizando Maven, ou exportado para o __Eclipse__ e executado por lá. 
-
-Tomei liberdade de renomear para nanoSense para evitar a indexação do projeto.
+O projeto pode ser compilado utilizando Maven, ou exportado para o __Eclipse__ e executado por lá.
